@@ -1,4 +1,5 @@
 ActiveAdmin.register Quotation do
+  permit_params :content, :source_url, :author
 
 
   # See permitted parameters documentation:
