@@ -29,6 +29,7 @@ class QuotationsController < ApplicationController
   # POST /quotations.json
   def create
     @quotation = Quotation.new(quotation_params)
+    @quotation.user = current_user
 
     respond_to do |format|
       if @quotation.save
