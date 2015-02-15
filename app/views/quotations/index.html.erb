@@ -1,31 +1,40 @@
-<h1>Listing quotations</h1>
-
-<table>
+<%- model_class = Quotation -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Quotation %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Content</th>
-      <th>Source url</th>
-      <th>Author</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:content) %></th>
+      <th><%= model_class.human_attribute_name(:source_url) %></th>
+      <th><%= model_class.human_attribute_name(:author) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @quotations.each do |quotation| %>
       <tr>
+        <td><%= quotation.id %></td>
         <td><%= quotation.content %></td>
         <td><%= quotation.source_url %></td>
         <td><%= quotation.author %></td>
-        <td><%= quotation.user %></td>
-        <td><%= link_to 'Show', quotation %></td>
-        <td><%= link_to 'Edit', edit_quotation_path(quotation) %></td>
-        <td><%= link_to 'Destroy', quotation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l quotation.created_at, format: :long %></td>
+        <td>
+          <%= link_to quotation_path(quotation), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to quotation_path(quotation), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Quotation', new_quotation_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_quotation_path,
+            :class => 'btn btn-primary' %>
